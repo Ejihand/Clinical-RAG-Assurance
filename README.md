@@ -47,23 +47,15 @@ Ask a question to the full pipeline.
 ```bash
 python -m src.rag "What is the recommended dosage for artesunate?"
 
-Project Status
-[x] Phase 1: Ingestion
+## Project Status
 
-[x] PDF Parsing & Text Cleaning
-
-[x] Recursive Text Chunking (LangChain)
-
-[x] Phase 2: Embedding & Storage
-
-[x] Vector Database Setup (ChromaDB)
-
-[x] Embedding Generation (OpenAI text-embedding-3-small)
-
-[x] Phase 3: Retrieval & Generation
-
-[x] Context Retrieval
-
-[x] LLM Integration (GPT-4o)
-
-[x] RAG Response Generation
+- [x] **Phase 1: Ingestion**
+  - [x] PDF Parsing & Text Cleaning
+  - [x] Recursive Text Chunking (LangChain)
+- [x] **Phase 2: Embedding & Storage**
+  - [x] Vector Database Setup (ChromaDB)
+  - [x] Embedding Generation (OpenAI text-embedding-3-small)
+- [x] **Phase 3: Retrieval & Generation**
+  - [x] Context Retrieval
+  - [x] LLM Integration (GPT-4o)
+  - [x] RAG Response Generation
