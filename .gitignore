@@ -1,0 +1,19 @@
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# Python compiled files
+__pycache__/
+*.py[cod]
+
+# System files
+.DS_Store
+
+# Project specific
+debug_output.txt
+.env
+
+# Optional: Data (Best practice is usually NOT to commit large PDFs)
+# Uncomment the line below if you want to exclude the PDF from GitHub
+# data/
