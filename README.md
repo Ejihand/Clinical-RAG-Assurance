@@ -28,25 +28,39 @@ A Retrieval-Augmented Generation (RAG) system designed to process and query clin
     OPENAI_API_KEY=sk-proj-your-key-here
     ```
 
+Here is the correctly formatted Markdown block. I have removed the indentation (which can sometimes break code highlighting on GitHub) and fixed the typo in "Systeme."
+
+
 ## Usage Pipeline
 
 To run the system from scratch, follow these steps in order:
 
 **Step 1: Parse & Chunk**
 Extract text and split it into searchable chunks (saved to `data/chunks.json`).
-    ```bash
-    python -m src.ingest.chunker
-    ```
+```bash
+python -m src.ingest.chunker
+
+```
+
 **Step 2: Embed & Store**
-Generate vector embeddings and save them to ChromaDB (data/chroma_db).
-    ```bash
-    python -m src.ingest.embedder
-    ```
-**Step 3: Run the RAG Systeme**
+Generate vector embeddings and save them to ChromaDB (`data/chroma_db`).
+
+```bash
+python -m src.ingest.embedder
+
+```
+
+**Step 3: Run the RAG System**
 Ask a question to the full pipeline.
-    ```bash
-    python -m src.rag "What is the recommended dosage for artesunate?"
-    ```
+
+```bash
+python -m src.rag "What is the recommended dosage for artesunate?"
+
+```
+
+```
+
+```
 
 ## Project Status
 
