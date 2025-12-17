@@ -58,9 +58,6 @@ python -m src.rag "What is the recommended dosage for artesunate?"
 
 ```
 
-```
-
-```
 
 ## Project Status
 
