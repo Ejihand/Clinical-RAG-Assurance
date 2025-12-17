@@ -9,11 +9,11 @@ __pycache__/
 
 # System files
 .DS_Store
+*:Zone.Identifier  <-- Add this line (cleans up Windows metadata)
 
 # Project specific
 debug_output.txt
 .env
 
-# Optional: Data (Best practice is usually NOT to commit large PDFs)
-# Uncomment the line below if you want to exclude the PDF from GitHub
-# data/
+# Data
+data/              
