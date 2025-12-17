@@ -1,38 +1,69 @@
 # Clinical RAG Assurance
 
-A Retrieval-Augmented Generation (RAG) system designed to process and query clinical guidelines with high accuracy and citation assurance. This project focuses on ingesting complex medical PDFs and allowing users to query them using an LLM while retrieving the exact source text.
+A Retrieval-Augmented Generation (RAG) system designed to process and query clinical guidelines with high accuracy and citation assurance. This project focuses on ingesting complex medical PDFs (specifically WHO Malaria Guidelines) and allowing users to query them using GPT-4, retrieving the exact source text for verification.
 
 ## Project Structure
 
-* `data/`: Contains raw PDF clinical guidelines.
-    * **Source Data:** [WHO Guidelines for Malaria - 3 June 2024 (PDF)](https://iris.who.int/bitstream/handle/10665/379635/B09146-eng.pdf)
-* `src/ingest/`: Scripts for parsing PDFs and chunking text.
-    * `pdf_parser.py`: Extracts and cleans text from the raw PDF.
+* `data/`: Storage for raw PDFs, processed JSON chunks, and the Vector Database.
+    * **Source Data:** [WHO Guidelines for Malaria (PDF)](https://iris.who.int/bitstream/handle/10665/379635/B09146-eng.pdf)
+* `src/`:
+    * `ingest/`: Pipelines for data processing.
+        * `pdf_parser.py`: Extracts raw text from PDFs.
+        * `chunker.py`: Splits text into semantic chunks using LangChain.
+        * `embedder.py`: Generates OpenAI embeddings and stores them in ChromaDB.
+    * `retrieval/`:
+        * `retrieve.py`: Logic to search the vector database.
+    * `rag.py`: **Main Application.** Combines retrieval with GPT-4 to generate answers.
 
-## Setup & Usage
+## Setup & Configuration
 
 1.  **Install Dependencies**
-    Ensure you have your virtual environment active, then run:
     ```bash
     pip install -r requirements.txt
     ```
 
-2.  **Run the PDF Parser**
-    Run the parser from the root directory to extract text from the guidelines:
+2.  **Environment Setup**
+    Create a `.env` file in the root directory and add your OpenAI API key:
     ```bash
-    python src/ingest/pdf_parser.py
+    OPENAI_API_KEY=sk-proj-your-key-here
     ```
-    *Expected Output:* The script will parse `data/guidelines.pdf`, display a sample of the cleaned text, and print the total word count.
 
-## Project Status
+## Usage Pipeline
 
-* [x] **Phase 1: Ingestion**
-    * [x] Environment Setup & Dependencies
-    * [x] PDF Parsing & Text Cleaning (Header/Footer removal)
-    * [ ] Text Chunking (Recursive Character Splitter)
-* [ ] **Phase 2: Embedding & Storage**
-    * [ ] Vector Database Setup (ChromaDB/FAISS)
-    * [ ] Embedding Generation
-* [ ] **Phase 3: Retrieval & Generation**
-    * [ ] LLM Integration
-    * [ ] RAG Pipeline Construction
+To run the system from scratch, follow these steps in order:
+
+**Step 1: Parse & Chunk**
+Extract text and split it into searchable chunks (saved to `data/chunks.json`).
+```bash
+python -m src.ingest.chunker
+
+**Step 2: Embed & Store**
+Generate vector embeddings and save them to ChromaDB
+```bash
+python -m src.rag "What is the recommended dosage for artesunate?"
+
+**Step 3: Run the RAG System**
+Ask a question to the full pipeline.
+```bash
+python -m src.rag "What is the recommended dosage for artesunate?"
+
+Project Status
+[x] Phase 1: Ingestion
+
+[x] PDF Parsing & Text Cleaning
+
+[x] Recursive Text Chunking (LangChain)
+
+[x] Phase 2: Embedding & Storage
+
+[x] Vector Database Setup (ChromaDB)
+
+[x] Embedding Generation (OpenAI text-embedding-3-small)
+
+[x] Phase 3: Retrieval & Generation
+
+[x] Context Retrieval
+
+[x] LLM Integration (GPT-4o)
+
+[x] RAG Response Generation
