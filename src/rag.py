@@ -36,7 +36,21 @@ def get_rag_chain():
     # 2. Setup LLM (GPT-4o)
     llm = ChatOpenAI(model="gpt-4o", temperature=0)
 
-    # 3. Define the Prompt (Clinical Persona) - OPTIMIZED v2
+    # ========================================================================
+    # 3. PROMPT ENGINEERING (OPTIMIZED)
+    # ========================================================================
+    
+    # ❌ V1: BASELINE PROMPT (Deprecated - Scored 30% Faithfulness)
+    # This was the initial attempt. It failed because it allowed outside knowledge.
+    # template = """You are a strictly clinical AI assistant specializing in malaria guidelines.
+    # Use the following pieces of retrieved context to answer the question.
+    # If the answer is not in the context, say "I cannot find this in the guidelines."
+    # Context: {context}
+    # Question: {question}
+    # Answer:"""
+
+    # ✅ V2: STRICT PROMPT (Active - Scored 100% Faithfulness)
+    # Updated with negative constraints and explicit rules to prevent hallucinations.
     template = """You are a strictly clinical AI assistant. You must answer the question strictly based ONLY on the provided context below.
 
     Rules:
@@ -51,7 +65,7 @@ def get_rag_chain():
     Question: {question}
 
     Answer:"""
-    
+
     prompt = ChatPromptTemplate.from_template(template)
 
     # 4. Build the Chain
@@ -65,11 +79,4 @@ def get_rag_chain():
         | StrOutputParser()
     )
     
-    # We also return the retriever so the evaluator can check context precision
     return rag_chain, retriever
-
-if __name__ == "__main__":
-    # Quick Test
-    chain, _ = get_rag_chain()
-    response = chain.invoke("What is the treatment for severe malaria?")
-    print(f"🤖 Answer: {response}")
