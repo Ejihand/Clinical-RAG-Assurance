@@ -30,7 +30,7 @@ A Retrieval-Augmented Generation (RAG) system designed to process and query clin
     OPENAI_API_KEY=sk-proj-your-key-here
     ```
 
-## Usage Pipeline
+##Usage Pipeline
 
 To run the system from scratch, follow these steps in order:
 
