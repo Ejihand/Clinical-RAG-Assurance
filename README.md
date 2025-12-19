@@ -38,7 +38,6 @@ To run the system from scratch, follow these steps in order:
 Extract text and split it into searchable chunks (saved to `data/chunks.json`).
 ```bash
 python -m src.ingest.chunker
-
 ```
 
 **Step 2: Embed & Store**
@@ -46,7 +45,6 @@ Generate vector embeddings and save them to ChromaDB (`data/chroma_db`).
 
 ```bash
 python -m src.ingest.embedder
-
 ```
 
 **Step 3: Run the RAG System (CLI)**
@@ -54,7 +52,6 @@ Ask a question to the full pipeline via the terminal.
 
 ```bash
 python -m src.rag "What is the recommended dosage for artesunate?"
-
 ```
 
 **Step 4: Launch Web UI**
@@ -62,7 +59,6 @@ Start the interactive chat interface in your browser.
 
 ```bash
 streamlit run src/app.py
-
 ```
 
 ## Project Status
