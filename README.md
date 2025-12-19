@@ -30,17 +30,14 @@ A Retrieval-Augmented Generation (RAG) system designed to process and query clin
     OPENAI_API_KEY=sk-proj-your-key-here
     ```
 
-##Usage Pipeline
+## Usage Pipeline
 
 To run the system from scratch, follow these steps in order:
 
-
 **Step 1: Parse & Chunk**
 Extract text and split it into searchable chunks (saved to `data/chunks.json`).
-
 ```bash
 python -m src.ingest.chunker
-```
 
 **Step 2: Embed & Store**
 Generate vector embeddings and save them to ChromaDB (`data/chroma_db`).
