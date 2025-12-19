@@ -1,9 +1,14 @@
-```markdown
-## Clinical RAG Assurance
+# **Clinical RAG Assurance**
 
-A **Retrieval-Augmented Generation (RAG)** system designed to process and query clinical guidelines with high accuracy and citation assurance. This project focuses on ingesting complex medical PDFs (specifically WHO Malaria Guidelines) and allowing users to query them using **GPT-4o**, retrieving the exact source text for verification.
+A **Retrieval-Augmented Generation (RAG)** system designed to process and
+query clinical guidelines with high accuracy and citation assurance.
+This project focuses on ingesting complex medical PDFs (specifically
+WHO Malaria Guidelines) and allowing users to query them using **GPT-4o**,
+retrieving the exact source text for verification.
 
-To ensure clinical reliability, this system incorporates an **Automated Evaluation Pipeline** using **Ragas** to measure Faithfulness, Answer Relevance, and Context Precision.
+To ensure clinical reliability, this system incorporates an **Automated
+Evaluation Pipeline** using **Ragas** to measure Faithfulness, Answer
+Relevance, and Context Precision.
 
 ---
 
@@ -24,27 +29,23 @@ To ensure clinical reliability, this system incorporates an **Automated Evaluati
 * [ ] **Phase 5: Evaluation & Assurance (Current Focus)**
     * [ ] Synthetic Test Set Generation
     * [ ] Ragas Metrics Calculation (Faithfulness, Precision)
-
 ---
-
 ## 📂 Project Structure
 
-* `data/`: Storage for raw PDFs, processed JSON chunks, and the Vector Database.
-    * **Source Data:** [WHO Guidelines for Malaria (PDF)](https://iris.who.int/bitstream/handle/10665/379635/B09146-eng.pdf)
+* `data/`: Storage for raw PDFs, chunks, and Vector DB.
+    * **Source Data:** [WHO Guidelines for Malaria (PDF)][1]
 * `src/`:
     * `ingest/`: Pipelines for data processing.
         * `pdf_parser.py`: Extracts raw text from PDFs.
-        * `chunker.py`: Splits text into semantic chunks using LangChain.
-        * `embedder.py`: Generates OpenAI embeddings and stores them in ChromaDB.
+        * `chunker.py`: Splits text into semantic chunks.
+        * `embedder.py`: Generates embeddings -> ChromaDB.
     * `retrieval/`:
         * `retrieve.py`: Logic to search the vector database.
     * `evaluation/`: **(New)**
-        * `evaluate.py`: Runs Ragas metrics to score the system's accuracy.
-    * `rag.py`: **Main Logic.** Combines retrieval with GPT-4 to generate answers.
-    * `app.py`: **Web Interface.** Streamlit-based chat application.
-
+        * `evaluate.py`: Runs Ragas metrics to score accuracy.
+    * `rag.py`: **Main Logic.** Combines retrieval + GPT-4.
+    * `app.py`: **Web Interface.** Streamlit-based chat app.
 ---
-
 ## ⚙️ Setup & Configuration
 
 **1. Install Dependencies**
@@ -52,48 +53,44 @@ To ensure clinical reliability, this system incorporates an **Automated Evaluati
 pip install -r requirements.txt
 
 ```
-
 **2. Environment Setup**
-Create a `.env` file in the root directory and add your OpenAI API key:
+Create a `.env` file in the root directory and add your key:
 
 ```bash
 OPENAI_API_KEY=sk-proj-your-key-here
 
 ```
-
 ## 🚀 Usage Pipeline
 
-To run the system from scratch, follow these steps in order:
+Run these steps in order:
 
 ### **Step 1: Parse & Chunk**
 
-Extract text and split it into searchable chunks (saved to `data/chunks.json`).
+Extract text and split it into searchable chunks.
 
 ```bash
 python -m src.ingest.chunker
 
 ```
-
 ### **Step 2: Embed & Store**
 
-Generate vector embeddings and save them to ChromaDB (`data/chroma_db`).
+Generate vector embeddings and save to ChromaDB.
 
 ```bash
 python -m src.ingest.embedder
 
 ```
-
 ### **Step 3: Run the RAG System (CLI)**
 
-Ask a question to the full pipeline via the terminal to test functionality.
+Test the pipeline via the terminal.
 
 ```bash
-python -m src.rag "What is the recommended dosage for artesunate?"
+python -m src.rag "What is the dosage for artesunate?"
 
 ```
 ### **Step 4: Launch Web UI**
 
-Start the interactive chat interface in your browser.
+Start the interactive chat interface.
 
 ```bash
 streamlit run src/app.py
@@ -101,7 +98,7 @@ streamlit run src/app.py
 ```
 ### **Step 5: Run Clinical Evaluation**
 
-Generate trust scores (Faithfulness, Relevance) for the system's answers.
+Generate trust scores (Faithfulness, Relevance).
 
 ```bash
 python -m src.evaluation.evaluate
