@@ -1,5 +1,5 @@
 ```markdown
-# Clinical RAG Assurance
+## Clinical RAG Assurance
 
 A **Retrieval-Augmented Generation (RAG)** system designed to process and query clinical guidelines with high accuracy and citation assurance. This project focuses on ingesting complex medical PDFs (specifically WHO Malaria Guidelines) and allowing users to query them using **GPT-4o**, retrieving the exact source text for verification.
 
