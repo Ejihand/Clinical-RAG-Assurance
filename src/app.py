@@ -2,72 +2,45 @@ import streamlit as st
 import sys
 from pathlib import Path
 
-# -----------------------------------------------------------------------------
-# PATH SETUP
-# We need to tell Python where the 'src' folder is, 
-# because Streamlit runs differently than standard scripts.
-# -----------------------------------------------------------------------------
-current_file = Path(__file__).resolve()
-project_root = current_file.parent.parent
-sys.path.append(str(project_root))
+# 1. Path Setup (To find your src folder)
+CURRENT_FILE = Path(__file__).resolve()
+PROJECT_ROOT = CURRENT_FILE.parent.parent
+sys.path.append(str(PROJECT_ROOT))
 
-# Import your RAG backend function
-from src.rag import generate_answer
+from src.rag import get_rag_chain
 
-# -----------------------------------------------------------------------------
-# UI CONFIGURATION
-# -----------------------------------------------------------------------------
-st.set_page_config(
-    page_title="Clinical RAG Assurance",
-    page_icon="🏥",
-    layout="wide"
-)
-
+# 2. Page Config
+st.set_page_config(page_title="Clinical RAG Assurance", page_icon="🏥")
 st.title("🏥 Clinical RAG Assurance")
-st.markdown("Ask questions based strictly on the **WHO Malaria Guidelines**.")
+st.caption("Strictly grounded AI for WHO Malaria Guidelines")
 
-# -----------------------------------------------------------------------------
-# SESSION STATE (Memory)
-# This keeps the chat history alive when the app re-runs.
-# -----------------------------------------------------------------------------
+# 3. Initialize Chat History
 if "messages" not in st.session_state:
-    st.session_state.messages = []
+    st.session_state["messages"] = [{"role": "assistant", "content": "Hello. I am a strict clinical assistant. Ask me about malaria guidelines."}]
 
-# Sidebar Controls
-with st.sidebar:
-    st.header("Settings")
-    if st.button("🗑️ Clear Chat History"):
-        st.session_state.messages = []
-        st.rerun()
+# 4. Initialize RAG Engine (Cached so it doesn't reload every click)
+@st.cache_resource
+def load_engine():
+    chain, _ = get_rag_chain()
+    return chain
 
-# -----------------------------------------------------------------------------
-# CHAT INTERFACE
-# -----------------------------------------------------------------------------
+rag_chain = load_engine()
 
-# 1. Display existing chat history
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+# 5. Display Chat Messages
+for msg in st.session_state.messages:
+    st.chat_message(msg["role"]).write(msg["content"])
 
-# 2. Handle new user input
-if prompt := st.chat_input("Ex: What is the dosage for artesunate?"):
-    
-    # A. Display user message immediately
-    with st.chat_message("user"):
-        st.markdown(prompt)
-    
-    # Save to history
+# 6. Chat Input Logic
+if prompt := st.chat_input():
+    # Append user message
     st.session_state.messages.append({"role": "user", "content": prompt})
+    st.chat_message("user").write(prompt)
 
-    # B. Generate and display assistant response
+    # Generate Response
     with st.chat_message("assistant"):
-        with st.spinner("🔍 Searching guidelines and generating answer..."):
-            try:
-                # Call your backend!
-                response = generate_answer(prompt)
-                st.markdown(response)
-                
-                # Save response to history
-                st.session_state.messages.append({"role": "assistant", "content": response})
-            except Exception as e:
-                st.error(f"An error occurred: {e}")
+        with st.spinner("Consulting guidelines..."):
+            response = rag_chain.invoke(prompt)
+            st.write(response)
+    
+    # Append assistant message
+    st.session_state.messages.append({"role": "assistant", "content": response})
