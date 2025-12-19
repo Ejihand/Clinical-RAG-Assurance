@@ -34,8 +34,10 @@ A Retrieval-Augmented Generation (RAG) system designed to process and query clin
 
 To run the system from scratch, follow these steps in order:
 
+
 **Step 1: Parse & Chunk**
 Extract text and split it into searchable chunks (saved to `data/chunks.json`).
+
 ```bash
 python -m src.ingest.chunker
 ```
