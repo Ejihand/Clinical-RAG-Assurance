@@ -36,16 +36,20 @@ def get_rag_chain():
     # 2. Setup LLM (GPT-4o)
     llm = ChatOpenAI(model="gpt-4o", temperature=0)
 
-    # 3. Define the Prompt (Clinical Persona)
-    template = """You are a strictly clinical AI assistant specializing in malaria guidelines.
-    Use the following pieces of retrieved context to answer the question.
-    If the answer is not in the context, say "I cannot find this in the guidelines."
-    
+    # 3. Define the Prompt (Clinical Persona) - OPTIMIZED v2
+    template = """You are a strictly clinical AI assistant. You must answer the question strictly based ONLY on the provided context below.
+
+    Rules:
+    1. Do not use any outside medical knowledge.
+    2. If the answer is not present in the Context, respond exactly with: "I cannot find this in the guidelines."
+    3. Quote the context when possible to ensure faithfulness.
+    4. Keep answers concise and clinical.
+
     Context:
     {context}
-    
+
     Question: {question}
-    
+
     Answer:"""
     
     prompt = ChatPromptTemplate.from_template(template)
