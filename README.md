@@ -1,11 +1,3 @@
-I apologize for the confusion. You are absolutely right—let's stick to the structure you are comfortable with and that we have already established.
-
-Here is the **refined, professional version** of your README. It keeps the exact structure you pasted but upgrades the formatting and adds the **RAGAS Evaluation** phase to complete the "Assurance" part of your project.
-
-You can copy and paste this directly into your `README.md`.
-
----
-
 ```markdown
 # Clinical RAG Assurance
 
